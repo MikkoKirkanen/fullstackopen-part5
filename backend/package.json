@@ -9,7 +9,8 @@
     "dev": "NODE_ENV=development nodemon index.js",
     "test": "NODE_ENV=test node --test --test-concurrency=1",
     "build:ui": "rm -rf dist && cd ../frontend && npm run build && mv dist ../backend",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start:test": "NODE_ENV=test node index.js"
   },
   "author": "Mikko Kirkanen",
   "license": "MIT",

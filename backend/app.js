@@ -6,6 +6,7 @@ import middleware from './utils/middleware.js'
 import loginRouter from './controllers/login.js'
 import blogsRouter from './controllers/blogs.js'
 import usersRouter from './controllers/users.js'
+import testingRouter from './controllers/testing.js'
 
 connectDb()
 
@@ -16,6 +17,14 @@ app.use(express.static('dist'))
 
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
+
+if (process.env.NODE_ENV === 'test') {
+  // import('./controllers/testing.js').then(({ default: testingRouter}) => {
+    app.use('/api/testing', testingRouter)
+  // }).catch((err) => {
+    // console.error('Failed to load testing router:', err)
+  // })
+}
 
 app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogsRouter)

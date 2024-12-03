@@ -42,14 +42,14 @@ describe('Users', () => {
       const newUser = { username: 'mikko', password: 'password' }
       const res = await api.post(users_url).send(newUser).expect(500)
 
-      assert.strictEqual(res.body.error, 'Username is already in use')
+      assert.strictEqual(res.body.title, 'Username is already in use')
     })
 
     test('should require username', async () => {
       const newUser = { username: '', password: 'password' }
 
       const res = await api.post(users_url).send(newUser).expect(400)
-      assert(res.body.errors.includes('Username is required'))
+      assert(res.body.messages.includes('Username is required'))
     })
 
     test('should require minimum length of 3 to username', async () => {
@@ -57,7 +57,7 @@ describe('Users', () => {
 
       const res = await api.post(users_url).send(newUser).expect(400)
       assert(
-        res.body.errors.includes('Username minimum length is 3 characters')
+        res.body.messages.includes('Username minimum length is 3 characters')
       )
     })
 
@@ -65,7 +65,7 @@ describe('Users', () => {
       const newUser = { username: 'kirkanen' }
 
       const res = await api.post(users_url).send(newUser).expect(400)
-      assert.strictEqual(res.body.error, 'Password is required')
+      assert.strictEqual(res.body.title, 'Password is required')
     })
 
     test('should require minimum length of 8 to password', async () => {
@@ -73,7 +73,7 @@ describe('Users', () => {
 
       const res = await api.post(users_url).send(newUser).expect(400)
       assert.strictEqual(
-        res.body.error,
+        res.body.title,
         'Password length must be at least 8 characters'
       )
     })

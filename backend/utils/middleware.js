@@ -33,16 +33,16 @@ const errorHandler = (error, req, res, next) => {
   logger.error(error.message)
 
   if (error.name === 'CastError') {
-    return res.status(400).json({ error: 'Malformatted id' })
+    return res.status(400).json({ title: 'Malformatted id' })
   } else if (error.name === 'ValidationError') {
     const errors = Object.values(error.errors).map((e) => e.message)
-    return res.status(400).json({ errors: errors })
+    return res.status(400).json({ title: error._message, messages: errors })
   } else if (error.name === 'MongoServerError' && error.code === 11000) {
-    return res.status(500).json({ error: 'Username is already in use' })
+    return res.status(500).json({ title: 'Username is already in use' })
   } else if (error.name === 'JsonWebTokenError') {
-    return res.status(401).json({ error: 'Token missing or invalid' })
+    return res.status(401).json({ title: 'Token missing or invalid' })
   } else if (error.name === 'TokenExpiredError') {
-    return res.status(401).json({ error: 'Token expired' })
+    return res.status(401).json({ title: 'Token expired' })
   }
 
   next(error)

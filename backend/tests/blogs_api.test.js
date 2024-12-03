@@ -80,7 +80,7 @@ describe('Blogs', () => {
         .set('Authorization', `Bearer ${user.token}`)
         .expect(400)
 
-      assert(res.body.errors.includes('Title is required'))
+      assert(res.body.messages.includes('Title is required'))
     })
 
     // Exercise 4.12
@@ -94,7 +94,7 @@ describe('Blogs', () => {
         .set('Authorization', `Bearer ${user.token}`)
         .expect(400)
 
-      assert(res.body.errors.includes('Url is required'))
+      assert(res.body.messages.includes('Url is required'))
     })
 
     // Exercise 4.23
@@ -104,7 +104,7 @@ describe('Blogs', () => {
         .send(newBlog)
         .expect(401)
 
-      assert.strictEqual(res.body.error, 'Token missing or invalid')
+      assert.strictEqual(res.body.title, 'Token missing or invalid')
     })
   })
 
@@ -140,7 +140,7 @@ describe('Blogs', () => {
       const blogsAfter = await helper.blogsInDb()
 
       assert.strictEqual(blogsAfter.length, blogs.length - 1)
-      assert.strictEqual(deletedBlog.body.message, 'Blog successfully deleted')
+      assert.strictEqual(deletedBlog.body.title, 'Blog successfully deleted')
     })
   })
 })
